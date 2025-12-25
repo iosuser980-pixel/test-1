@@ -128,12 +128,9 @@ TDS:Upgrade(13)
 TDS:Upgrade(14)
 TDS:Upgrade(15)
 
-TDS:Place("Accelerator", 15.031, 1.00, 10.048) -- 24
-TDS:Place("Accelerator", 17.402, 1.00, 7.768) -- 25
-TDS:Place("Accelerator", 17.978, 1.00, 10.741) -- 26
-TDS:SetTarget("Last", 17.978, 10.741, 320)
-TDS:SetTarget("Last", 15.031, 10.048, 320)
-TDS:SetTarget("Last", 17.402, 7.768, 320)
+TDS:Place("Accelerator", 15.031, 1.00, 10.048, 1, 0, 0, 0, 1, 0, 0, 0, 1) -- 24
+TDS:Place("Accelerator", 17.402, 1.00, 7.768, 1, 0, 0, 0, 1, 0, 0, 0, 1) -- 25
+TDS:Place("Accelerator", 17.978, 1.00, 10.741, 1, 0, 0, 0, 1, 0, 0, 0, 1) -- 26
 
 TDS:Upgrade(25)
 TDS:Upgrade(25)
