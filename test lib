@@ -69,7 +69,7 @@ TDS:Upgrade(16)
 
 TDS:SetOption(16, "Track", "Green")
 
-TDS:TDS:AutoChain(16)
+TDS:Ability(8, "Hologram Tower", {use}, true)
 
 TDS:Upgrade(1)
 TDS:Upgrade(2)
