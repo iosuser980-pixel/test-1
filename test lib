@@ -130,11 +130,11 @@ TDS:Upgrade(14)
 TDS:Upgrade(15)
 
 TDS:Place("Accelerator", 14.575, 0.941, 13.983) -- 24
-TDS:SetTarget(24, "Last Enemy")
+TDS:SetTarget(24, "Last_Enemy")
 TDS:Place("Accelerator", 11.572, 0.927, 13.964) -- 25
-TDS:SetTarget(25, "Last Enemy")
+TDS:SetTarget(25, "Last_Enemy")
 TDS:Place("Accelerator", 8.572, 0.913, 13.925) -- 26
-TDS:SetTarget(26, "Last Enemy")
+TDS:SetTarget(26, "Last_Enemy")
 
 TDS:Upgrade(24)
 TDS:Upgrade(24)
