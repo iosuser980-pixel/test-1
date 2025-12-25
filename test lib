@@ -130,11 +130,11 @@ TDS:Upgrade(14)
 TDS:Upgrade(15)
 
 TDS:Place("Accelerator", 14.575, 0.941, 13.983) -- 24
-TDS:SetTarget(24, Last Enemy)
+TDS:SetTarget(24, 2)
 TDS:Place("Accelerator", 11.572, 0.927, 13.964) -- 25
-TDS:SetTarget(25, Last Enemy)
+TDS:SetTarget(25, 2)
 TDS:Place("Accelerator", 8.572, 0.913, 13.925) -- 26
-TDS:SetTarget(26, Last Enemy)
+TDS:SetTarget(26, 2)
 
 TDS:Upgrade(24)
 TDS:Upgrade(24)
@@ -162,10 +162,11 @@ TDS:Upgrade(21)
 TDS:Upgrade(22)
 TDS:Upgrade(23)
 
-TDS:SetOption(16, "Track", "Red")
-
 TDS:Place("Accelerator", 5.517, 0.908, 13.945) -- 27
 TDS:Place("Accelerator", 13.173, 0.944, 11.322) -- 28
+
+TDS:SetOption(16, "Track", "Red")
+
 TDS:Place("Accelerator", 10.159, 0.930, 11.231) -- 29
 TDS:Place("Accelerator", 7.081, 0.915, 11.267) -- 30
 TDS:Place("Accelerator", 4.045, 0.927, 11.175) -- 31
@@ -217,7 +218,7 @@ TDS:Upgrade(32)
 TDS:Upgrade(32)
 TDS:Upgrade(32)
 
-TDS:Place("Turret", -2.207, 0.928, 13.999) -- 33
+TDS:Place("Turret", -2.507, 0.928, 13.920) -- 33
 
 TDS:Upgrade(33)
 TDS:Upgrade(33)
@@ -226,7 +227,7 @@ TDS:Upgrade(33)
 TDS:Upgrade(33)
 TDS:Upgrade(33)
 
-TDS:Place("Turret", -0.216, 0.909, 10.490) -- 34
+TDS:Place("Turret", -0.516, 0.909, 10.490) -- 34
 
 TDS:Upgrade(34)
 TDS:Upgrade(34)
