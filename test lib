@@ -69,7 +69,7 @@ TDS:Upgrade(16)
 
 TDS:SetOption(16, "Track", "Green")
 
-TDS:Ability(16, "Drop The Beat", {use}, true)
+TDS:Ability(16, "Drop The Beat", Nill , true)
 
 TDS:Upgrade(1)
 TDS:Upgrade(2)
