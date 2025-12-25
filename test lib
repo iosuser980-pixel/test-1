@@ -67,7 +67,7 @@ TDS:Upgrade(16)
 TDS:Upgrade(16)
 TDS:Upgrade(16)
 TDS:SetOption(16, "Track", "Green")
-TDS:Ability(16, "Drop-The-Beat", true)
+TDS:Ability(16, "Drop-The-Beat",boolean, true)
 
 TDS:Upgrade(1)
 TDS:Upgrade(2)
@@ -148,3 +148,69 @@ TDS:Upgrade(24)
 TDS:Upgrade(24)
 TDS:Upgrade(24)
 TDS:Upgrade(24)
+
+TDS:SetOption(16, "Track", "Red")
+
+TDS:Place("Accelerator", 11.770, 1.00, 10.877) -- 27
+
+TDS:Upgrade(27)
+TDS:Upgrade(27)
+TDS:Upgrade(27)
+TDS:Upgrade(27)
+TDS:Upgrade(27)
+
+TDS:Place("Accelerator", 8.272, 1.00, 10.487) -- 28
+
+TDS:Upgrade(28)
+TDS:Upgrade(28)
+TDS:Upgrade(28)
+TDS:Upgrade(28)
+TDS:Upgrade(28)
+
+TDS:Place("Accelerator", 5.412, 1.00, 9.135) -- 29
+
+TDS:Upgrade(29)
+TDS:Upgrade(29)
+TDS:Upgrade(29)
+TDS:Upgrade(29)
+TDS:Upgrade(29)
+
+TDS:Place("Accelerator", 9.662, 1.00, 13.244) -- 30
+
+TDS:Upgrade(30)
+TDS:Upgrade(30)
+TDS:Upgrade(30)
+TDS:Upgrade(30)
+TDS:Upgrade(30)
+
+TDS:Place("Accelerator", 5.948, 1.00, 12.455) -- 31
+
+TDS:Upgrade(31)
+TDS:Upgrade(31)
+TDS:Upgrade(31)
+TDS:Upgrade(31)
+TDS:Upgrade(31)
+
+TDS:Place("Turret", 2.548, 1.00, 13.587) -- 32
+
+TDS:Upgrade(32)
+TDS:Upgrade(32)
+TDS:Upgrade(32)
+TDS:Upgrade(32)
+TDS:Upgrade(32)
+
+TDS:Place("Turret", 1.908, 1.00, 9.029) -- 33
+
+TDS:Upgrade(33)
+TDS:Upgrade(33)
+TDS:Upgrade(33)
+TDS:Upgrade(33)
+TDS:Upgrade(33)
+
+TDS:Place("Turret", -1.249, 1.00, 11.778) -- 34
+
+TDS:Upgrade(34)
+TDS:Upgrade(34)
+TDS:Upgrade(34)
+TDS:Upgrade(34)
+TDS:Upgrade(34)
