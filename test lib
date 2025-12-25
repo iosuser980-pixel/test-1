@@ -11,7 +11,7 @@ _G.Webhook = "YOUR-WEBHOOK-URL-HERE"
 local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/DuxiiT/auto-strat/refs/heads/main/Library.lua"))()
 
 -- [[ START STRATEGY ]]
-TDS:Loadout("Scout", "Accelerator", "Dj", "Ranger", "Turret")
+TDS:Loadout("Scout", "Accelerator", "DJ Booth", "Ranger", "Turret")
 TDS:Mode("Frost")
 TDS:GameInfo("Summer Castle", {})
 
@@ -69,7 +69,7 @@ TDS:Upgrade(16)
 
 TDS:SetOption(16, "Track", "Green")
 
-TDS:Ability(8, "Hologram Tower", {use}, true)
+TDS:Ability(16, "Drop The Beat", {use}, true)
 
 TDS:Upgrade(1)
 TDS:Upgrade(2)
