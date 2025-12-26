@@ -11,13 +11,10 @@ _G.Webhook = "WEBHOOK HERE"
 local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/DuxiiT/auto-strat/refs/heads/main/Library.lua"))()
 
 -- [[ START STRATEGY ]]
-TDS:Loadout("Scout", "Accelerator", "DJ Booth", "Ranger", "Turret")
+TDS:Loadout("Ranger", "Cowboy", "DJ Booth", "Commander", "Minigunner")
 TDS:Mode("Frost")
 TDS:GameInfo("Summer Castle", {
-    HiddenEnemies = false,
     Glass = true,
-    ExplodingEnemies = false,
-    Limitation = false,
     Committed = true
 })  -- You can add more modifiers if you wanna (just use right name)
 
@@ -124,6 +121,16 @@ TDS:Upgrade(10)
 TDS:Place("Commander", 10.381, 0.922, 13.896)
 TDS:Place("Commander", 13.488, 0.936, 13.937)
 TDS:Place("Commander", 11.950, 0.938, 11.283)
+
+TDS:Upgrade(19)
+TDS:Upgrade(19)
+TDS:Upgrade(20)
+TDS:Upgrade(20)
+TDS:Upgrade(21)
+TDS:Upgrade(21)
+
+TDS:AutoChain(19,20,21)
+
 TDS:Place("Minigunner", 8.970, 0.925, 10.813)
 TDS:Place("Minigunner", 6.076, 0.915, 9.821)
 TDS:Place("Minigunner", 2.159, 0.921, 13.925)
