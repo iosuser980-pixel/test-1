@@ -9,10 +9,6 @@ local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/raxs0420/
 -- [[ START STRATEGY ]]
 TDS:Loadout("Shotgunner", "Spotlight Tech", "Commander", "Ranger", "Accelerator")
 
---TDS:Place("Electroshocker", 0.806, 6.450, -28.121) -- 2375
---TDS:Place("Electroshocker", 0.905, 6.450, -24.966) -- 725
---TDS:Place("Electroshocker", -12.505, 6.450, -23.843) -- 725
---TDS:Place("Electroshocker", -12.513, 6.450, -20.832) -- 725
 
 TDS:Place("Shotgunner", -8.757, 6.450, -14.754) -- 1
 TDS:Place("Shotgunner", -8.580, 6.450, -12.609) -- 2
@@ -35,15 +31,16 @@ TDS:Place("Shotgunner", -6.795, 6.450, -23.442) -- 18
 TDS:Place("Shotgunner", -4.779, 6.450, -23.427) -- 19
 TDS:Place("Shotgunner", -2.631, 6.450, -23.562) -- 20
 
---TDS:Place("Commander", -6.378, 6.450, -28.909) -- 850
---TDS:Place("Commander", -3.479, 6.450, -27.621) -- 850
 TDS:Place("Spotlight Tech", -20.503, 14.530, -25.572) -- 21
 TDS:SetTarget(21, "Random")
 TDS:Upgrade(21)
 TDS:Upgrade(21)
+
 TDS:Place("Commander", -6.184, 6.450, -25.872) -- 22
 TDS:Upgrade(22)
 TDS:Upgrade(22)
+
+TDS:Ability(22, "Call to Arms", {Nill} , true)
 
 TDS:Upgrade(1)
 TDS:Upgrade(1)
@@ -154,6 +151,46 @@ TDS:Upgrade(29)
 TDS:Upgrade(22)
 TDS:Upgrade(22)
 
+TDS:Place("Accelerator", -5.527, 6.450, -34.746) -- 30
+TDS:Upgrade(30)
+TDS:Upgrade(30)
+TDS:Upgrade(30)
+TDS:Upgrade(30)
+TDS:Place("Accelerator", -2.432, 6.450, -34.803) -- 31
+TDS:Upgrade(31)
+TDS:Upgrade(31)
+TDS:Upgrade(31)
+TDS:Upgrade(31)
+TDS:Place("Accelerator", -8.649, 6.450, -34.728) -- 32
+TDS:Upgrade(32)
+TDS:Upgrade(32)
+TDS:Upgrade(32)
+TDS:Upgrade(32)
+TDS:Place("Accelerator", -11.688, 6.450, -35.462) -- 33
+TDS:Upgrade(33)
+TDS:Upgrade(33)
+TDS:Upgrade(33)
+TDS:Upgrade(33)
+TDS:Place("Accelerator", -13.105, 6.450, -38.147) -- 34
+TDS:Upgrade(34)
+TDS:Upgrade(34)
+TDS:Upgrade(34)
+TDS:Upgrade(34)
+TDS:Place("Accelerator", -0.958, 6.450, -37.544) -- 35
+TDS:Upgrade(35)
+TDS:Upgrade(35)
+TDS:Upgrade(35)
+TDS:Upgrade(35)
+TDS:Place("Accelerator", -2.748, 6.450, -40.286) -- 36
+TDS:Upgrade(36)
+TDS:Upgrade(36)
+TDS:Upgrade(36)
+TDS:Upgrade(36)
+TDS:Place("Accelerator", -3.431, 6.450, -43.392) -- 37
+TDS:Upgrade(37)
+TDS:Upgrade(37)
+TDS:Upgrade(37)
+TDS:Upgrade(37)
 
 TDS:Upgrade(23) 
 TDS:Upgrade(23) 
@@ -170,44 +207,29 @@ TDS:Upgrade(28)
 TDS:Upgrade(29) 
 TDS:Upgrade(29)
 
+TDS:Place("Commander", -10.033, 6.450, -37.995) -- 38
+TDS:Place("Commander", -7.075, 6.450, -37.428) -- 39
+TDS:Place("Commander", -4.049, 6.450, -37.442) -- 40
+TDS:Upgrade(38) 
+TDS:Upgrade(38) 
+TDS:Upgrade(38) 
+TDS:Upgrade(38) 
+TDS:Upgrade(39) 
+TDS:Upgrade(39) 
+TDS:Upgrade(39) 
+TDS:Upgrade(39) 
+TDS:Upgrade(40) 
+TDS:Upgrade(40) 
+TDS:Upgrade(40) 
+TDS:Upgrade(40) 
 
-TDS:Place("Accelerator", -4.583, 6.450, -43.268) -- 30
-TDS:Upgrade(30)
-TDS:Upgrade(30)
-TDS:Upgrade(30)
-TDS:Upgrade(30)
-TDS:Place("Accelerator", -2.578, 6.450, -45.876) -- 31
-TDS:Upgrade(31)
-TDS:Upgrade(31)
-TDS:Upgrade(31)
-TDS:Upgrade(31)
-TDS:Place("Accelerator", -1.331, 6.450, -42.826) -- 32
-TDS:Upgrade(32)
-TDS:Upgrade(32)
-TDS:Upgrade(32)
-TDS:Upgrade(32)
-TDS:Place("Accelerator", -5.455, 6.450, -47.003) -- 33
-TDS:Upgrade(33)
-TDS:Upgrade(33)
-TDS:Upgrade(33)
-TDS:Upgrade(33)
-TDS:Place("Accelerator", -8.582, 6.450, -46.804) -- 34
-TDS:Upgrade(34)
-TDS:Upgrade(34)
-TDS:Upgrade(34)
-TDS:Upgrade(34)
-TDS:Place("Accelerator", -11.682, 6.450, -47.262) -- 35
-TDS:Upgrade(35)
-TDS:Upgrade(35)
-TDS:Upgrade(35)
-TDS:Upgrade(35)
-TDS:Place("Accelerator", -9.708, 6.450, -49.771) -- 36
-TDS:Upgrade(36)
-TDS:Upgrade(36)
-TDS:Upgrade(36)
-TDS:Upgrade(36)
-TDS:Place("Accelerator", -6.301, 6.450, -49.941) -- 37
-TDS:Upgrade(37)
-TDS:Upgrade(37)
-TDS:Upgrade(37)
-TDS:Upgrade(37)
+TDS:AutoChain(38,39,40)
+
+
+
+
+
+
+
+
+
