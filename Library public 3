@@ -19,8 +19,9 @@ TDS:GameInfo("Simplicity", {
     Committed = true
 })
 
-TDS:UnlockTimeScale()
-TDS:TimeScale(2)
+TDS:UnlockTimeScale()  -- Delete whole line to deactivate auto time-scale
+TDS:TimeScale(2)  -- Number = speed (0,0.5,1,1.5,2)
+
 TDS:Place("Scout", -15.24, 1.00, -8.97) -- 1
 TDS:Place("Scout", -16.65, 1.00, -11.65) -- 2
 TDS:Place("Scout", -19.71, 1.00, -12.34) -- 3
