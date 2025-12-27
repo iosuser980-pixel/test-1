@@ -2,6 +2,6 @@ getgenv().EggHub = {
     Map = "BLOX OUT",
     Difficulty = "Easy",
     AutoAbility = true,
-    MacroUrl = "https://raw.githubusercontent.com/minh597/Teststrat/refs/heads/main/Hi"
+    MacroUrl = "https://raw.githubusercontent.com/raxs0420/test/refs/heads/main/tdx%20inside"
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/minh597/Egg/refs/heads/main/tdxmacro.lua"))()
