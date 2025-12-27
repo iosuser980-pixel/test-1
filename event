@@ -1,8 +1,9 @@
-
+_G.AutoStrat = true
 
 -- [[ INITIALIZE LIBRARY ]]
-local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/DuxiiT/auto-strat/refs/heads/main/Library.lua"))()
+local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/raxs0420/test/refs/heads/main/library%20new/improved.lua"))()
 
+TDS:autoskip(true) 
 
 TDS:Place("Shotgunner", -8.757, 6.450, -14.754) -- 1
 TDS:Place("Shotgunner", -8.580, 6.450, -12.609) -- 2
@@ -24,6 +25,8 @@ TDS:Place("Shotgunner", -8.658, 6.450, -27.706) -- 17
 TDS:Place("Shotgunner", -6.795, 6.450, -23.442) -- 18
 TDS:Place("Shotgunner", -4.779, 6.450, -23.427) -- 19
 TDS:Place("Shotgunner", -2.631, 6.450, -23.562) -- 20
+
+TDS:autoskip(false) 
 
 TDS:Place("Spotlight Tech", -20.503, 14.530, -25.572) -- 21
 TDS:SetTarget(21, "Random")
