@@ -221,6 +221,20 @@ TDS:Upgrade(40)
 
 TDS:AutoChain(38,39,40)
 
+TDS:Upgrade(30)
+TDS:Upgrade(31)
+TDS:Upgrade(32)
+TDS:Upgrade(33)
+TDS:Upgrade(34)
+TDS:Upgrade(35)
+TDS:Upgrade(36)
+TDS:Upgrade(37)
+
+TDS:Ability(22, "Support Caravan", {Nill} , true)
+TDS:Ability(38, "Support Caravan", {Nill} , true)
+TDS:Ability(39, "Support Caravan", {Nill} , true)
+TDS:Ability(40, "Support Caravan", {Nill} , true)
+
 
 
 
