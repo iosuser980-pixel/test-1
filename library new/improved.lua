@@ -960,7 +960,7 @@ local function start_anti_lag()
                     npc:Destroy()
                 end
             end
-            task.wait(0.5)
+            task.wait(0.1)
         end
         anti_lag_running = false
     end)
