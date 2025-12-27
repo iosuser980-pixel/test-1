@@ -1,6 +1,7 @@
 -- [[ CONFIGURATION ]]
 _G.AutoStrat = true
 _G.AutoSnowballs = true
+_G.AntiLag = true
 
 -- [[ WEBHOOK SETTINGS ]]
 _G.SendWebhook = false -- Set to true to enable notifications
@@ -190,14 +191,15 @@ TDS:Upgrade(28)
 TDS:Upgrade(28)
 TDS:Upgrade(28)
 
-TDS:autoskip(false)
-
 TDS:SetOption(16, "Track", "Red")
 
 TDS:Upgrade(29)
 TDS:Upgrade(29)
 TDS:Upgrade(29)
 TDS:Upgrade(29)
+
+TDS:autoskip(false)
+
 TDS:Upgrade(29)
 
 TDS:Upgrade(30)
