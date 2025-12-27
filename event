@@ -137,7 +137,7 @@ TDS:Upgrade(26)
 TDS:Place("Ranger", -10.500, 14.530, -41.300) -- 27
 TDS:Upgrade(27) 
 TDS:Upgrade(27) 
-TDS:Place("Ranger", -6.504,14.530,-45.500) -- 28
+TDS:Place("Ranger", -21.653,12.530,-60.261) -- 28
 TDS:Upgrade(28) 
 TDS:Upgrade(28) 
 TDS:Place("Ranger", -10.278,14.530,-44.814) -- 29
