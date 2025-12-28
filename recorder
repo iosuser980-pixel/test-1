@@ -5,14 +5,14 @@ screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 -- Create Control Frame
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 250, 0, 150)
+frame.Size = UDim2.new(0, 250, 0, 200)
 frame.Position = UDim2.new(0, 10, 0, 10)
 frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 frame.Parent = screenGui
 
 -- Console Output TextBox
 local console = Instance.new("TextBox")
-console.Size = UDim2.new(1, -20, 0, 100)
+console.Size = UDim2.new(1, -20, 0, 120)
 console.Position = UDim2.new(0, 10, 0, 10)
 console.Text = "Double click tower placements:\n"
 console.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
@@ -21,8 +21,12 @@ console.ClearTextOnFocus = false
 console.MultiLine = true
 console.Parent = frame
 
-local lastClickTime = 0
-local doubleClickThreshold = 0.3 -- seconds
+-- Copy Button
+local copyButton = Instance.new("TextButton")
+copyButton.Size = UDim2.new(1, -20, 0, 30)
+copyButton.Position = UDim2.new(0, 10, 0, 135)
+copyButton.Text = "Copy Logs"
+copyButton.Parent = frame
 
 local function updateConsole(text)
     console.Text = console.Text .. text .. "\n"
@@ -40,6 +44,9 @@ local function recordTowerAtPosition(position)
     updateConsole(logText)
 end
 
+local lastClickTime = 0
+local doubleClickThreshold = 0.3 -- seconds
+
 local function onMouseClick()
     local player = game.Players.LocalPlayer
     local mouse = player:GetMouse()
@@ -48,9 +55,8 @@ local function onMouseClick()
         -- Double click detected
         local hitPosition = mouse.Hit.p
         -- Call your tower placement logic here
-        -- Replace the following with your actual tower placement code
-        -- Example: PlaceTower(hitPosition)
-        -- For now, we just record the placement
+        -- Replace with actual placement code if available
+        -- For now, just log the placement
         recordTowerAtPosition(hitPosition)
         lastClickTime = 0 -- reset
     else
@@ -64,11 +70,13 @@ local function startDoubleClickDetection()
     local conn = mouse.Button1Down:Connect(function()
         onMouseClick()
     end)
-    -- Store connection if you need to disconnect later
     return conn
 end
 
 local connection = startDoubleClickDetection()
 
--- If you want to stop detection later, call:
--- connection:Disconnect()
+-- Button functionality to copy logs
+copyButton.MouseButton1Click:Connect(function()
+    -- Copy console text to clipboard
+    setclipboard(console.Text)
+end)
