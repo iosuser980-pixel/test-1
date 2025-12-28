@@ -1,22 +1,25 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local TowerPlacementEvent = ReplicatedStorage:WaitForChild("TowerPlacementEvent")
+local UserInputService = game:GetService("UserInputService")
 
-local player = game.Players.LocalPlayer
-local mouse = player:GetMouse()
+local function onInputBegan(input, gameProcessedEvent)
+    if gameProcessedEvent then return end
 
-local function sendTowerPlacement()
-    local hitPosition = mouse.Hit.p
-    -- Send data to server
-    TowerPlacementEvent:FireServer(hitPosition)
-    
-    -- Optional: log locally
-    print(string.format("Sent tower placement at: %.2f, %.2f, %.2f", hitPosition.X, hitPosition.Y, hitPosition.Z))
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        print("Left mouse button clicked")
+    elseif input.UserInputType == Enum.UserInputType.MouseButton2 then
+        print("Right mouse button clicked")
+    elseif input.UserInputType == Enum.UserInputType.MouseMovement then
+        print("Mouse moved to", input.Position)
+    elseif input.UserInputType == Enum.UserInputType.Keyboard then
+        print("Key pressed:", input.KeyCode)
+    end
 end
 
--- Example: bind to a key press to send placement
-game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
-    if gameProcessed then return end
-    if input.KeyCode == Enum.KeyCode.P then -- Press P to send placement
-        sendTowerPlacement()
+local function onInputEnded(input, gameProcessedEvent)
+    if gameProcessedEvent then return end
+    if input.UserInputType == Enum.UserInputType.Keyboard then
+        print("Key released:", input.KeyCode)
     end
-end)
+end
+
+UserInputService.InputBegan:Connect(onInputBegan)
+UserInputService.InputEnded:Connect(onInputEnded)
