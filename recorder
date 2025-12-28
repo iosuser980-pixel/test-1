@@ -1,55 +1,85 @@
 -- Create ScreenGui
 local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "ActionRecorderGui"
+screenGui.Name = "DoubleClickRecorderGui"
 screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
--- Create Frame for menu
+-- Create Control Frame
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 220, 0, 120)
+frame.Size = UDim2.new(0, 250, 0, 150)
 frame.Position = UDim2.new(0, 10, 0, 10)
 frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 frame.Parent = screenGui
 
--- Create Button to start recording
+-- Start Button
 local startButton = Instance.new("TextButton")
 startButton.Size = UDim2.new(1, -20, 0, 40)
 startButton.Position = UDim2.new(0, 10, 0, 10)
 startButton.Text = "Start Recording"
 startButton.Parent = frame
 
--- Create Button to stop recording
+-- Stop Button
 local stopButton = Instance.new("TextButton")
 stopButton.Size = UDim2.new(1, -20, 0, 40)
 stopButton.Position = UDim2.new(0, 10, 0, 60)
 stopButton.Text = "Stop Recording"
 stopButton.Parent = frame
 
+-- Console Output TextBox
+local console = Instance.new("TextBox")
+console.Size = UDim2.new(1, -20, 0, 40)
+console.Position = UDim2.new(0, 10, 0, 110)
+console.Text = "Console Output:\n"
+console.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+console.TextColor3 = Color3.new(1, 1, 1)
+console.ClearTextOnFocus = false
+console.MultiLine = true
+console.Parent = frame
+
 local isRecording = false
+local lastClickTime = 0
+local doubleClickThreshold = 0.3 -- seconds
+
 local connections = {}
 
--- Function to log mouse click positions
-local function onMouseClick()
-    local player = game.Players.LocalPlayer
-    local mouse = player:GetMouse()
-    -- Get the target position in 3D space
-    local hitPosition = mouse.Hit.p
-    print("Mouse clicked at: " .. tostring(hitPosition))
-end
-
--- Start recording: connect mouse click event
-local function startRecording()
-    if not isRecording then
-        isRecording = true
-        -- Connect mouse button down event
-        local conn = game.Players.LocalPlayer:GetMouse().Button1Down:Connect(function()
-            onMouseClick()
-        end)
-        table.insert(connections, conn)
-        print("Recording started.")
+local function updateConsole(text)
+    console.Text = console.Text .. text .. "\n"
+    -- Keep the last few lines to avoid overflow
+    local lines = string.split(console.Text, "\n")
+    if #lines > 20 then
+        lines = table.move(lines, #lines - 19, #lines, 1, {})
+        console.Text = table.concat(lines, "\n")
     end
 end
 
--- Stop recording: disconnect all connections
+local function onMouseClick()
+    local player = game.Players.LocalPlayer
+    local mouse = player:GetMouse()
+    local currentTime = tick()
+    if currentTime - lastClickTime <= doubleClickThreshold then
+        -- Double click detected
+        local hitPosition = mouse.Hit.p
+        local logText = string.format("Double Click at: %.2f, %.2f, %.2f", hitPosition.X, hitPosition.Y, hitPosition.Z)
+        print(logText)
+        updateConsole(logText)
+        lastClickTime = 0 -- reset
+    else
+        lastClickTime = currentTime
+    end
+end
+
+local function startRecording()
+    if not isRecording then
+        isRecording = true
+        -- Listen for mouse clicks
+        local mouse = game.Players.LocalPlayer:GetMouse()
+        local conn = mouse.Button1Down:Connect(function()
+            onMouseClick()
+        end)
+        table.insert(connections, conn)
+        updateConsole("Started recording double clicks.")
+    end
+end
+
 local function stopRecording()
     if isRecording then
         isRecording = false
@@ -57,10 +87,9 @@ local function stopRecording()
             conn:Disconnect()
         end
         connections = {}
-        print("Recording stopped.")
+        updateConsole("Stopped recording.")
     end
 end
 
--- Connect buttons
 startButton.MouseButton1Click:Connect(startRecording)
 stopButton.MouseButton1Click:Connect(stopRecording)
