@@ -1,23 +1,56 @@
 local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
 
+-- Create a ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "InputLogGui"
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create a TextLabel for logs
+local logLabel = Instance.new("TextLabel")
+logLabel.Size = UDim2.new(0, 400, 0, 200)
+logLabel.Position = UDim2.new(0, 10, 0, 10)
+logLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+logLabel.TextColor3 = Color3.new(1, 1, 1)
+logLabel.TextWrapped = true
+logLabel.Text = "Input Log:\n"
+logLabel.Parent = screenGui
+
+local logText = logLabel.Text
+
+-- Function to append logs
+local function appendLog(text)
+    logText = logText .. text .. "\n"
+    -- Limit to last 20 lines
+    local lines = {}
+    for line in logText:gmatch("[^\n]+") do
+        table.insert(lines, line)
+    end
+    if #lines > 20 then
+        lines = {unpack(lines, #lines - 19)}
+    end
+    logLabel.Text = table.concat(lines, "\n")
+end
+
+-- Input handling
 local function onInputBegan(input, gameProcessedEvent)
     if gameProcessedEvent then return end
 
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        print("Left mouse button clicked")
+        appendLog("Left mouse button clicked at " .. tostring(input.Position))
     elseif input.UserInputType == Enum.UserInputType.MouseButton2 then
-        print("Right mouse button clicked")
+        appendLog("Right mouse button clicked at " .. tostring(input.Position))
     elseif input.UserInputType == Enum.UserInputType.MouseMovement then
-        print("Mouse moved to", input.Position)
+        appendLog("Mouse moved to " .. tostring(input.Position))
     elseif input.UserInputType == Enum.UserInputType.Keyboard then
-        print("Key pressed:", input.KeyCode)
+        appendLog("Key pressed: " .. tostring(input.KeyCode))
     end
 end
 
 local function onInputEnded(input, gameProcessedEvent)
     if gameProcessedEvent then return end
     if input.UserInputType == Enum.UserInputType.Keyboard then
-        print("Key released:", input.KeyCode)
+        appendLog("Key released: " .. tostring(input.KeyCode))
     end
 end
 
