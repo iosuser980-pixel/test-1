@@ -68,7 +68,7 @@ if game_state == "GAME" then
     end)
 end
 
-function TDS:UseItem(Item_Name)
+function TDS:UseItem(i_name, px, py, pz)
     if game_state ~= "GAME" then
         warn("Cannot use item outside of game.")
         return false
@@ -76,27 +76,32 @@ function TDS:UseItem(Item_Name)
 
     local item_id = nil
     for id, name in pairs(ItemNames) do
-        if name == Item_Name then
+        if name == i_name then
             item_id = id
             break
         end
     end
 
     if not item_id then
-        warn("Item not found: " .. Item_Name)
+        warn("Item not found: " .. i_name)
         return false
     end
 
-    -- Assuming the server expects a specific remote event/function to activate items
+    -- Prepare parameters for server invocation
+    local params = {
+        item_id = item_id,
+        position = {x = px, y = py, z = pz}
+    }
+
     local success, res = pcall(function()
-        return remote_func:InvokeServer("UseItem", item_id)
+        return remote_func:InvokeServer("UseItem", params)
     end)
 
     if success and check_res_ok(res) then
-        print("Used item: " .. Item_Name)
+        print("Used item: " .. i_name .. " at position (" .. px .. ", " .. py .. ", " .. pz .. ")")
         return true
     else
-        warn("Failed to use item: " .. Item_Name)
+        warn("Failed to use item: " .. i_name)
         return false
     end
 end
