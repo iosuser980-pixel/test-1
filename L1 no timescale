@@ -2,13 +2,14 @@
 _G.AutoStrat = true
 _G.AutoSkip = false
 _G.AutoSnowballs = true
+_G.AntiLag = true
 
 -- [[ WEBHOOK SETTINGS ]]
 _G.SendWebhook = false -- Set to true to enable notifications
 _G.Webhook = "WEBHOOK HERE" 
 
 -- [[ INITIALIZE LIBRARY ]]
-local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/DuxiiT/auto-strat/refs/heads/main/Library.lua"))()
+local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/raxs0420/test/refs/heads/main/library%20new/improved.lua"))()
 
 -- [[ START STRATEGY ]]
 TDS:Loadout("Scout", "Accelerator", "DJ Booth", "Ranger", "Turret")
