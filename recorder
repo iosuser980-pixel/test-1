@@ -1,40 +1,66 @@
 -- Create ScreenGui
 local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "PositionRecorderGui"
+screenGui.Name = "ActionRecorderGui"
 screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 -- Create Frame for menu
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 200, 0, 100)
+frame.Size = UDim2.new(0, 220, 0, 120)
 frame.Position = UDim2.new(0, 10, 0, 10)
 frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 frame.Parent = screenGui
 
--- Create Button to record position
-local recordButton = Instance.new("TextButton")
-recordButton.Size = UDim2.new(1, -20, 0, 40)
-recordButton.Position = UDim2.new(0, 10, 0, 10)
-recordButton.Text = "Record Mouse Position"
-recordButton.Parent = frame
+-- Create Button to start recording
+local startButton = Instance.new("TextButton")
+startButton.Size = UDim2.new(1, -20, 0, 40)
+startButton.Position = UDim2.new(0, 10, 0, 10)
+startButton.Text = "Start Recording"
+startButton.Parent = frame
 
--- Create Label to display recorded position
-local positionLabel = Instance.new("TextLabel")
-positionLabel.Size = UDim2.new(1, -20, 0, 40)
-positionLabel.Position = UDim2.new(0, 10, 0, 60)
-positionLabel.Text = "Position: None"
-positionLabel.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-positionLabel.TextColor3 = Color3.new(1, 1, 1)
-positionLabel.Parent = frame
+-- Create Button to stop recording
+local stopButton = Instance.new("TextButton")
+stopButton.Size = UDim2.new(1, -20, 0, 40)
+stopButton.Position = UDim2.new(0, 10, 0, 60)
+stopButton.Text = "Stop Recording"
+stopButton.Parent = frame
 
-local recordedPosition = nil
+local isRecording = false
+local connections = {}
 
--- Function to record mouse position
-local function recordPosition()
+-- Function to log mouse click positions
+local function onMouseClick()
     local player = game.Players.LocalPlayer
     local mouse = player:GetMouse()
-    recordedPosition = Vector3.new(mouse.Hit.p.X, mouse.Hit.p.Y, mouse.Hit.p.Z)
-    positionLabel.Text = "Position: " .. tostring(recordedPosition)
+    -- Get the target position in 3D space
+    local hitPosition = mouse.Hit.p
+    print("Mouse clicked at: " .. tostring(hitPosition))
 end
 
--- Connect button click
-recordButton.MouseButton1Click:Connect(recordPosition)
+-- Start recording: connect mouse click event
+local function startRecording()
+    if not isRecording then
+        isRecording = true
+        -- Connect mouse button down event
+        local conn = game.Players.LocalPlayer:GetMouse().Button1Down:Connect(function()
+            onMouseClick()
+        end)
+        table.insert(connections, conn)
+        print("Recording started.")
+    end
+end
+
+-- Stop recording: disconnect all connections
+local function stopRecording()
+    if isRecording then
+        isRecording = false
+        for _, conn in ipairs(connections) do
+            conn:Disconnect()
+        end
+        connections = {}
+        print("Recording stopped.")
+    end
+end
+
+-- Connect buttons
+startButton.MouseButton1Click:Connect(startRecording)
+stopButton.MouseButton1Click:Connect(stopRecording)
