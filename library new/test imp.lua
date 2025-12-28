@@ -68,6 +68,31 @@ if game_state == "GAME" then
     end)
 end
 
+function TDS:ItemUse(Item_Name, req_wave)
+    local item_id = nil
+    for id, name in pairs(ItemNames) do
+        if name == Item_Name or id == Item_Name then
+            item_id = id
+            break
+        end
+    end
+    
+    if not item_id then
+        warn("Item not found: " .. tostring(Item_Name))
+        return false
+    end
+    
+    -- Check wave requirement
+    local current_wave = -- get current wave from game
+    if current_wave < req_wave then
+        return false
+    end
+    
+    -- Fire remote to use item
+    remote_event:FireServer("UseItem", item_id)
+    return true
+end
+
 -- // check if remote returned valid
 local function check_res_ok(data)
     if data == true then return true end
