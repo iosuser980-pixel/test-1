@@ -284,7 +284,7 @@ local function run_vote_skip()
             remote_func:InvokeServer("Voting", "Skip")
         end)
         if success then break end
-        task.wait(0.2)
+        task.wait(0.1)
     end
 end
 
@@ -314,7 +314,7 @@ local function match_ready_up()
         end
         
         if not vote_ready then
-            task.wait(0.5) 
+            task.wait(0.1) 
         end
     end
 
@@ -586,7 +586,7 @@ local function start_auto_skip()
                 run_vote_skip()
             end
 
-            task.wait(1)
+            task.wait(0.1)
         end
 
         auto_skip_running = false
@@ -671,7 +671,7 @@ end
 
 function TDS:VoteSkip(req_wave)
     if req_wave then
-        repeat task.wait(0.5) until get_current_wave() >= req_wave
+        repeat task.wait(0.1) until get_current_wave() >= req_wave
     end
     run_vote_skip()
 end
