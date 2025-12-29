@@ -807,10 +807,10 @@ function TDS:SellAll(req_wave)
     return true
 end
 
-function TDS:Ability(idx, name, data, loop)
+function TDS:Ability(t_obj, ab_name, ab_data, is_looping, idx, req_wave)
     local t = self.placed_towers[idx]
     if not t then return false end
-    return do_activate_ability(t, name, data, loop)
+    return do_activate_ability(t_obj, ab_name, ab_data, is_looping, idx, req_wave)
 end
 
 function TDS:AutoChain(...)
