@@ -6,7 +6,7 @@ local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/raxs0420/
 
 -- [[ START STRATEGY ]]
 TDS:Mode("Hardcore")
-TDS:GameInfo("Wracked Battlefild", {})
+TDS:GameInfo("Wrecked Battlefield", {})
 
 TDS:Place("Military Base", 1.811, 1.000, 42.016) -- 1
 TDS:Upgrade(1)
