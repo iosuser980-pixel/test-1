@@ -1,0 +1,52 @@
+-- [[ CONFIGURATION ]]
+_G.AutoStrat = true
+_G.AutoSkip = true
+  
+-- [[ INITIALIZE LIBRARY ]]
+local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/raxs0420/test/refs/heads/main/library%20new/test%20imp.lua"))()
+
+-- [[ START STRATEGY ]]
+TDS:Mode("Hardcore")
+TDS:GameInfo("Wrecked Battlefield II", {
+    Glass = false,
+})
+
+TDS:Place("Shotgunner", -37.588, 1.964, -6.094) -- 1
+TDS:Place("Shotgunner", -24.005, 1.704, -5.337) -- 2
+TDS:Upgrade(1)
+TDS:Upgrade(2)
+TDS:Upgrade(1)
+TDS:Upgrade(2)
+TDS:Place("Electroshocker", -26.920, 1.821, -1.528) -- 3
+TDS:Upgrade(3)
+TDS:Upgrade(3)
+TDS:Place("Shotgunner", -26.239, 1.780, -5.363) -- 4
+TDS:SetTarget(4, "Strongest")
+TDS:Upgrade(4)
+TDS:Upgrade(4)
+TDS:Place("Shotgunner", -28.310, 1.845, -5.104) -- 5
+TDS:SetTarget(5, "Strongest")
+TDS:Upgrade(5)
+TDS:Upgrade(5)
+TDS:Place("Shotgunner", -30.435, 1.916, -4.779) -- 6
+TDS:SetTarget(6, "Strongest")
+TDS:Upgrade(6)
+TDS:Upgrade(6)
+TDS:Place("Commander", -30.427, 1.522, -9.898) -- 7
+TDS:Place("Freezer", -30.111, 2.110, -2.167) -- 8
+TDS:SetTarget(8, "Strongest")
+TDS:Upgrade(8)
+TDS:Upgrade(8)
+TDS:Upgrade(7)
+TDS:Upgrade(7)
+TDS:Place("Shotgunner", -32.629, 1.982, -4.533) -- 9
+TDS:Upgrade(9)
+TDS:Upgrade(9)
+TDS:Place("Shotgunner", -25.245, 1.890, -3.435) -- 10
+TDS:Upgrade(10)
+TDS:Upgrade(10)
+TDS:GetWave()
+TDS:UseAbility(t_obj, "Drop The Beat", {Nill}, false, 7, 23)
+TDS:Place("Freezer", 20.968, 0.719, -7.236) -- 12
+TDS:GetWave()
+TDS:Sell(12, 26)
