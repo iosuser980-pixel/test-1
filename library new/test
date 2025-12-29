@@ -15,7 +15,7 @@ TDS:Loadout("Scout", "Accelerator", "DJ Booth", "Ranger", "Turret")
 TDS:Mode("Frost")
 TDS:GameInfo("Summer Castle", {
     Glass = true,
-    ExplodingEnemies = True,
+    ExplodingEnemies = true,
     Committed = true
 })  -- You can add more modifiers if you wanna (just use right name)
 
