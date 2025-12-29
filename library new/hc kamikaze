@@ -6,7 +6,6 @@ _G.AutoSkip = true
 local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/raxs0420/test/refs/heads/main/library%20new/improved.lua"))()
 
 -- [[ START STRATEGY ]]
-TDS:Loadout("Ranger", "Military Base", "Mercenary Base", "Engineer", "Accelerator")
 TDS:Mode("Hardcore")
 TDS:GameInfo("Wrecked Battlefield II", {
     Glass = false,
