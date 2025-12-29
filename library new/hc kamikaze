@@ -43,8 +43,11 @@ TDS:Place("Shotgunner", -32.629, 1.982, -4.533) -- 9
 TDS:Upgrade(9)
 TDS:Upgrade(9)
 TDS:Place("Shotgunner", -25.245, 1.890, -3.435) -- 10
+TDS:Place("Shotgunner", -22.261,1.566,-3.366) -- 11
 TDS:Upgrade(10)
 TDS:Upgrade(10)
+TDS:Upgrade(11)
+TDS:Upgrade(11)
 TDS:GetWave()
 TDS:SellAll(25)
 TDS:Place("Freezer", 20.968, 0.719, -7.236) -- 12
