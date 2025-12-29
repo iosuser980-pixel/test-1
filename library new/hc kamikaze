@@ -1,8 +1,17 @@
 -- [[ CONFIGURATION ]]
 _G.AutoStrat = true
+_G.AutoSkip = true
 
 -- [[ INITIALIZE LIBRARY ]]
-local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/raxs0420/test/refs/heads/main/library%20new/test%20imp.lua"))()
+local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/raxs0420/test/refs/heads/main/library%20new/improved.lua"))()
+
+-- [[ START STRATEGY ]]
+TDS:Loadout("Ranger", "Military Base", "Mercenary Base", "Engineer", "Accelerator")
+TDS:Mode("Hardcore")
+TDS:GameInfo("Wrecked Battlefield II", {
+    Glass = false,
+})
+
 
 TDS:Place("Shotgunner", -37.588, 1.964, -6.094) -- 1
 TDS:Place("Shotgunner", -24.005, 1.704, -5.337) -- 2
@@ -39,7 +48,7 @@ TDS:Place("Shotgunner", -25.245, 1.890, -3.435) -- 10
 TDS:Upgrade(10)
 TDS:Upgrade(10)
 TDS:GetWave()
-TDS:UseAbility(t_obj, "Drop The Beat", {Nill}, false, 7, 23)
+TDS:SellAll(26)
 TDS:Place("Freezer", 20.968, 0.719, -7.236) -- 12
 TDS:GetWave()
 TDS:Sell(12, 26)
