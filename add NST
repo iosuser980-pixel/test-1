@@ -1,6 +1,5 @@
 -- [[ CONFIGURATION ]]
 _G.AutoStrat = true
-_G.AutoSkip = false
 _G.AutoSnowballs = true
 _G.AntiLag = true
 
@@ -17,6 +16,9 @@ TDS:Mode("Frost")
 TDS:GameInfo("Summer Castle", {
     Glass = true,
 })  -- You can add more modifiers if you wanna (just use right name/Id)
+
+TDS:UnlockTimeScale()  -- Delete whole line to deactivate auto time-scale
+TDS:TimeScale(2)  -- Number = speed (0,0.5,1,1.5,2)
 
 TDS:Place("Cowboy", 12.472, 0.973, 24.025)
 TDS:Upgrade(1)
