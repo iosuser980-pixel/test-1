@@ -1,7 +1,6 @@
 -- [[ CONFIGURATION ]]
 _G.AutoStrat = true
-_G.AutoSkip = true
-  
+
 -- [[ INITIALIZE LIBRARY ]]
 local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/raxs0420/test/refs/heads/main/library%20new/test%20imp.lua"))()
 
