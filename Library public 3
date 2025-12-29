@@ -1,6 +1,6 @@
 -- [[ CONFIGURATION ]]
 _G.AutoStrat = true
-_G.AutoSkip = false
+_G.AntiLag = true
 _G.AutoSnowballs = true
 
 -- [[ WEBHOOK SETTINGS ]]
@@ -16,6 +16,7 @@ TDS:Mode("Frost")
 TDS:GameInfo("Simplicity", {
     HiddenEnemies = true,
     Glass = true,
+    Limitation = true,
     Committed = true
 })
 
@@ -67,15 +68,6 @@ TDS:Upgrade(14)
 TDS:Place("Scout", -9.46, 1.00, 3.14) -- 15
 TDS:Upgrade(15)
 TDS:Upgrade(15)
-TDS:Place("Scout", -9.52, 1.00, 6.32) -- 16
-TDS:Upgrade(16)
-TDS:Upgrade(16)
-TDS:Place("Scout", -9.02, 1.00, -9.11) -- 17
-TDS:Upgrade(17)
-TDS:Upgrade(17)
-TDS:Place("Scout", -21.71, 1.00, 3.27) -- 18
-TDS:Upgrade(18)
-TDS:Upgrade(18)
 TDS:Upgrade(1)
 TDS:Upgrade(2)
 TDS:Upgrade(3)
@@ -89,9 +81,6 @@ TDS:Upgrade(12)
 TDS:Upgrade(13)
 TDS:Upgrade(14)
 TDS:Upgrade(15)
-TDS:Upgrade(16)
-TDS:Upgrade(17)
-TDS:Upgrade(18)
 TDS:Place("Mercenary Base", 25.39, 1.00, 12.63) -- 19
 TDS:Upgrade(19)
 TDS:Upgrade(19)
@@ -117,9 +106,6 @@ TDS:Upgrade(12)
 TDS:Upgrade(13)
 TDS:Upgrade(14)
 TDS:Upgrade(15)
-TDS:Upgrade(16)
-TDS:Upgrade(17)
-TDS:Upgrade(18)
 TDS:Upgrade(19)
 TDS:Upgrade(19)
 TDS:Upgrade(19)
