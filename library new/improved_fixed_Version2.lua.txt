@@ -8,9 +8,27 @@ local HttpService = game:GetService("HttpService")
 
 local function identify_game_state()
     local players = Players
-    local temp_player = players.LocalPlayer or players.PlayerAdded:Wait()
-    local temp_gui = temp_player:WaitForChild("PlayerGui")
-    
+
+    -- Safely get LocalPlayer, falling back to PlayerAdded if necessary.
+    local temp_player = players.LocalPlayer
+    if not temp_player then
+        -- Wait for a player to be added (useful if LocalPlayer isn't set yet)
+        temp_player = players.PlayerAdded:Wait()
+    end
+
+    -- If still nil for some reason, return UNKNOWN to avoid calling methods on nil
+    if not temp_player then
+        warn("identify_game_state: no player instance available")
+        return "UNKNOWN"
+    end
+
+    -- Wait for PlayerGui with a timeout to prevent indefinite blocking and errors
+    local temp_gui = temp_player:WaitForChild("PlayerGui", 30)
+    if not temp_gui then
+        warn("identify_game_state: PlayerGui not found within timeout")
+        return "UNKNOWN"
+    end
+
     while true do
         if temp_gui:FindFirstChild("LobbyGui") then
             return "LOBBY"
