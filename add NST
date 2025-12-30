@@ -4,26 +4,22 @@ _G.AutoSnowballs = true
 _G.AntiLag = true
 
 -- [[ WEBHOOK SETTINGS ]]
-_G.SendWebhook = true
-_G.Webhook = "https://discord.com/api/webhooks/1358823130864554106/Eaulh3X3GXiPQTVgSP2VqsqjxcGXo44GRJoGQ8b_mn2agFaJRk8z0K4gMswv7PmIbm9Z"
+_G.SendWebhook = false -- Set to true to enable notifications
+_G.Webhook = "https://discord.com/api/webhooks/1358823130864554106/Eaulh3X3GXiPQTVgSP2VqsqjxcGXo44GRJoGQ8b_mn2agFaJRk8z0K4gMswv7PmIbm9Z" 
 
 -- [[ INITIALIZE LIBRARY ]]
-local TDS = loadstring(game:HttpGet(
-    "https://raw.githubusercontent.com/raxs0420/test/main/library%20new/improved.lua"
-))()
+local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/raxs0420/test/refs/heads/main/library%20new/improved.lua"))()
 
 -- [[ START STRATEGY ]]
 TDS:Loadout("Ranger", "Cowboy", "DJ Booth", "Commander", "Minigunner")
 TDS:Mode("Frost")
-
--- MODIFIERS
 TDS:GameInfo("Summer Castle", {
     Glass = true,
     ExplodingEnemies = true
 })
 
-TDS:UnlockTimeScale()
-TDS:TimeScale(2)
+TDS:UnlockTimeScale()  -- Delete whole line to deactivate auto time-scale
+TDS:TimeScale(2)  -- Number = speed (0,0.5,1,1.5,2)
 
 TDS:Place("Cowboy", 12.472, 0.973, 24.025)
 TDS:Upgrade(1)
