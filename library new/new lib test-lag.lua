@@ -153,7 +153,7 @@ end
 
 -- // lobby / teleporting
 local function send_to_lobby()
-    task.wait(1)
+    task.wait(0.5)
     local lobby_remote = game.ReplicatedStorage.Network.Teleport["RE:backToLobby"]
     lobby_remote:FireServer()
 end
@@ -161,7 +161,7 @@ end
 local function handle_post_match()
     local ui_root
     repeat
-        task.wait(1)
+        task.wait(0.2)
 
         local root = player_gui:FindFirstChild("ReactGameNewRewards")
         local frame = root and root:FindFirstChild("Frame")
@@ -338,9 +338,9 @@ end
 
 local function select_map_override(map_id)
     remote_func:InvokeServer("LobbyVoting", "Override", map_id)
-    task.wait(3)
-    cast_map_vote(map_id, Vector3.new(12.59, 10.64, 52.01))
     task.wait(1)
+    cast_map_vote(map_id, Vector3.new(12.59, 10.64, 52.01))
+    task.wait(0.5)
     lobby_ready_up()
     match_ready_up()
 end
@@ -396,7 +396,7 @@ local function set_game_timescale(target_val)
             "TicketsManager",
             "CycleTimeScale"
         )
-        task.wait(0.5)
+        task.wait(0.2)
     end
 end
 
@@ -425,7 +425,7 @@ local function trigger_restart()
         end
     until found_section
 
-    task.wait(3)
+    task.wait(1)
     run_vote_skip()
 end
 
@@ -452,7 +452,7 @@ local function do_place_tower(t_name, t_pos)
         end)
 
         if ok and check_res_ok(res) then return true end
-        task.wait(0.25)
+        task.wait(0.1)
     end
 end
 
@@ -465,7 +465,7 @@ local function do_upgrade_tower(t_obj, path_id)
             })
         end)
         if ok and check_res_ok(res) then return true end
-        task.wait(0.25)
+        task.wait(0.1)
     end
 end
 
@@ -475,13 +475,13 @@ local function do_sell_tower(t_obj)
             return remote_func:InvokeServer("Troops", "Sell", { Troop = t_obj })
         end)
         if ok and check_res_ok(res) then return true end
-        task.wait(0.25)
+        task.wait(0.1)
     end
 end
 
 local function do_set_option(t_obj, opt_name, opt_val, req_wave)
     if req_wave then
-        repeat task.wait(0.3) until get_current_wave() >= req_wave
+        repeat task.wait(0.1) until get_current_wave() >= req_wave
     end
 
     while true do
@@ -493,7 +493,7 @@ local function do_set_option(t_obj, opt_name, opt_val, req_wave)
             })
         end)
         if ok and check_res_ok(res) then return true end
-        task.wait(0.25)
+        task.wait(0.1)
     end
 end
 
@@ -764,7 +764,7 @@ end
 
 function TDS:Sell(idx, req_wave)
     if req_wave then
-        repeat task.wait(0.5) until get_current_wave() >= req_wave
+        repeat task.wait(0.1) until get_current_wave() >= req_wave
     end
     local t = self.placed_towers[idx]
     if t and do_sell_tower(t) then
@@ -776,7 +776,7 @@ end
 
 function TDS:SellAll(req_wave)
     if req_wave then
-        repeat task.wait(0.5) until get_current_wave() >= req_wave
+        repeat task.wait(0.2) until get_current_wave() >= req_wave
     end
 
     local towers_copy = {unpack(self.placed_towers)}
@@ -817,9 +817,9 @@ function TDS:AutoChain(...)
             end
 
             if local_player.TimescaleTickets.Value >= 1 then
-                task.wait(5.5)
+                task.wait(3.5)
             else
-                task.wait(10.5) 
+                task.wait(5.5) 
             end
 
             i += 1
@@ -923,7 +923,7 @@ local function start_back_to_lobby()
             pcall(function()
                 handle_post_match()
             end)
-            task.wait(5)
+            task.wait(2)
         end
         back_to_lobby_running = false
     end)
