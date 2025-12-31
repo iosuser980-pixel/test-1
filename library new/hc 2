@@ -33,21 +33,21 @@ TDS:Upgrade(4)
 TDS:Upgrade(5)
 TDS:Upgrade(5)
 
-TDS:Place("Mercanery Base", 3.12251, 0.97499, -42.03828) -- 7
+TDS:Place("Mercenary Base", -3.53850, 0.97499, -39.41523) -- 7
 TDS:Upgrade(7)
 TDS:Upgrade(7)
 TDS:Upgrade(7)
 TDS:Upgrade(7)
 TDS:Upgrade(7)
 TDS:Upgrade(7)
-TDS:Place("Mercanery Base", -3.76082, 2.09181, -39.95605) -- 8
+TDS:Place("Mercanery Base", -1.05139, 0.97499, -34.42223) -- 8
 TDS:Upgrade(8)
 TDS:Upgrade(8)
 TDS:Upgrade(8)
 TDS:Upgrade(8)
 TDS:Upgrade(8)
 TDS:Upgrade(8)
-TDS:Place("Mercanery Base", -2.46285, 0.97499, -35.20661) -- 9
+TDS:Place("Mercanery Base", 3.40381, 0.97499, -41.56443) -- 9
 TDS:Upgrade(9)
 TDS:Upgrade(9)
 TDS:Upgrade(9)
