@@ -55,26 +55,26 @@ TDS:Upgrade(9)
 TDS:Upgrade(9)
 
 TDS:Place("Ranger", 9.439, 8.510, 1.528) -- 10
-TDS:Upgrade(7)
-TDS:Upgrade(7)
+TDS:Upgrade(10)
+TDS:Upgrade(10)
 TDS:Place("Ranger", 6.582, 8.510, 0.064) -- 11
-TDS:Upgrade(8)
-TDS:Upgrade(8)
+TDS:Upgrade(11)
+TDS:Upgrade(11)
 TDS:Place("Ranger", -3.486, 6.846, 2.467) -- 12
-TDS:Upgrade(9)
-TDS:Upgrade(9)
+TDS:Upgrade(12)
+TDS:Upgrade(12)
 TDS:Place("Ranger", -6.138, 6.846, 4.139) -- 13
-TDS:Upgrade(12)
-TDS:Upgrade(12)
+TDS:Upgrade(13)
+TDS:Upgrade(13)
 TDS:Place("Ranger", -2.912, 6.846, -0.530) -- 14
-TDS:Upgrade(13)
-TDS:Upgrade(13)
+TDS:Upgrade(14)
+TDS:Upgrade(14)
 TDS:Place("Ranger", -5.878, 6.846, 0.647) -- 15
-TDS:Upgrade(14)
-TDS:Upgrade(14)
+TDS:Upgrade(15)
+TDS:Upgrade(15)
 TDS:Place("Ranger", 9.031, 9.918, -1.227) -- 16
-TDS:Upgrade(15)
-TDS:Upgrade(15)
+TDS:Upgrade(16)
+TDS:Upgrade(16)
 
 TDS:Upgrade(1)
 TDS:Upgrade(2)
