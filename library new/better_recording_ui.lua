@@ -69,7 +69,7 @@ local function get_index(tower)
 end
 local function fmt_place(name,pos,idx)
     if pos then
-        return string.format('TDS:Place("%s", %.2f, %.2f, %.2f) -- %d', tostring(name), pos.X, pos.Y, pos.Z, idx or 0)
+        return string.format('TDS:Place("%s", %.5f, %.5f, %.5f) -- %d', tostring(name), pos.X, pos.Y, pos.Z, idx or 0)
     else
         return string.format('TDS:Place("%s", nil) -- %d', tostring(name), idx or 0)
     end
