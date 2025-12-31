@@ -2,6 +2,8 @@
 local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/raxs0420/test/refs/heads/main/library%20new/improved-testlag.lua"))()
 TDS:Loadout("Ranger", "Military Base", "Mercenary Base", "Engineer", "Accelerator")
 
+
+
 TDS:Place("Military Base", 1.41231, 1.96247, 42.04029) -- 1
 TDS:Upgrade(1)
 TDS:Upgrade(1)
