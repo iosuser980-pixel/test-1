@@ -1,21 +1,3 @@
--- TDS_UI.lua
--- Combined TDS library + in-game command UI + placement logging
--- Place as a LocalScript (e.g., StarterPlayerScripts or StarterGui) for Roblox
-
--- NOTE: This script assumes a typical Tower Defense Simulator structure with:
---   - ReplicatedStorage.RemoteFunction / RemoteEvent used as in the provided library
---   - PlayerGui UI element names similar to the original script
--- The command parser supports calls of the form:
---   TDS:Place("TowerName", 0, 5, 0)
---   TDS:AutoChain(1,2,3)
---   TDS:Ability(1, "Call to Arms", nil, true)
--- Basic arg types supported: numbers, quoted strings, booleans (true/false), Vector3.new(x,y,z)
--- For simple tables or other expressions the parser will attempt loadstring if available.
-
--- ========== BOILERPLATE / ENV SETUP ==========
-if not game:IsLoaded() then
-    game.Loaded:Wait()
-end
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
