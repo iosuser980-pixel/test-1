@@ -40,14 +40,14 @@ TDS:Upgrade(7)
 TDS:Upgrade(7)
 TDS:Upgrade(7)
 TDS:Upgrade(7)
-TDS:Place("Mercenery Base", -1.05139, 0.97499, -34.42223) -- 8
+TDS:Place("Mercenary Base", -1.05139, 0.97499, -34.42223) -- 8
 TDS:Upgrade(8)
 TDS:Upgrade(8)
 TDS:Upgrade(8)
 TDS:Upgrade(8)
 TDS:Upgrade(8)
 TDS:Upgrade(8)
-TDS:Place("Mercenery Base", 3.40381, 0.97499, -41.56443) -- 9
+TDS:Place("Mercenary Base", 3.40381, 0.97499, -41.56443) -- 9
 TDS:Upgrade(9)
 TDS:Upgrade(9)
 TDS:Upgrade(9)
