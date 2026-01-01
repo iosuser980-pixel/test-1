@@ -789,13 +789,25 @@ function TDS:RestartGame()
     trigger_restart()
 end
 
-function TDS:Place(t_name, px, py, pz)
+function TDS:Place(t_name, px, py, pz, ...)
+    local args = {...}
+    local stack = false
+
+    if args[#args] == "stack" or args[#args] == true then
+        py = 95
+    end
     if game_state ~= "GAME" then
         return false 
     end
+    
     local existing = {}
     for _, child in ipairs(workspace.Towers:GetChildren()) do
-        existing[child] = true
+        for _, sub_child in ipairs(child:GetChildren()) do
+            if sub_child.Name == "Owner" and sub_child.Value == local_player.UserId then
+                existing[child] = true
+                break
+            end
+        end
     end
 
     do_place_tower(t_name, Vector3.new(px, py, pz))
@@ -804,9 +816,14 @@ function TDS:Place(t_name, px, py, pz)
     repeat
         for _, child in ipairs(workspace.Towers:GetChildren()) do
             if not existing[child] then
-                new_t = child
-                break
+                for _, sub_child in ipairs(child:GetChildren()) do
+                    if sub_child.Name == "Owner" and sub_child.Value == local_player.UserId then
+                        new_t = child
+                        break
+                    end
+                end
             end
+            if new_t then break end
         end
         task.wait(0.05)
     until new_t
