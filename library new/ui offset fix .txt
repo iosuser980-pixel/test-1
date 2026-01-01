@@ -133,7 +133,7 @@ end
 
 local function fmt_place(name,pos,idx)
     if pos then
-        return string.format('TDS:Place("%s", %.3f, %.3f, %.3f) -- %d', tostring(name), pos.X, pos.Y, pos.Z, idx or 0)
+        return string.format('TDS:Place("%s", %.7f, %.7f, %.7f) -- %d', tostring(name), pos.X, pos.Y, pos.Z, idx or 0)
     else
         return string.format('TDS:Place("%s", nil) -- %d', tostring(name), idx or 0)
     end
