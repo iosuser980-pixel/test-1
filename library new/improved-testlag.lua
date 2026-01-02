@@ -983,20 +983,20 @@ local function get_root()
     return char and char:FindFirstChild("HumanoidRootPart")
 end
 
-local function start_auto_snowballs()
-    if auto_snowballs_running or not _G.AutoSnowballs then return end
-    auto_snowballs_running = true
+local function start_auto_pickups()
+    if auto_pickups_running or not _G.AutoPickups then return end
+    auto_pickups_running = true
 
     task.spawn(function()
-        while _G.AutoSnowballs do
+        while _G.AutoPickups do
             local folder = workspace:FindFirstChild("Pickups")
             local hrp = get_root()
 
             if folder and hrp then
                 for _, item in ipairs(folder:GetChildren()) do
-                    if not _G.AutoSnowballs then break end
+                    if not _G.AutoPickups then break end
 
-                    if item:IsA("MeshPart") and item.Name == "SnowCharm" then
+                    if item:IsA("MeshPart") and (item.Name == "SnowCharm" or item.Name == "Lorebook") then
                         if not is_void_charm(item) then
                             local old_pos = hrp.CFrame
                             hrp.CFrame = item.CFrame * CFrame.new(0, 3, 0)
@@ -1011,9 +1011,10 @@ local function start_auto_snowballs()
             task.wait(1)
         end
 
-        auto_snowballs_running = false
+        auto_pickups_running = false
     end)
 end
+
 
 local function start_back_to_lobby()
     if back_to_lobby_running then return end
@@ -1194,7 +1195,7 @@ end
 
 start_back_to_lobby()
 start_auto_skip()
-start_auto_snowballs()
+start_auto_pickups()
 start_anti_afk()
 start_rejoin_on_disconnect()
 
