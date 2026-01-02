@@ -832,7 +832,7 @@ function TDS:GameInfo(name, list)
     elseif is_map_available(name) then
         select_map_override(name)
     else
-        teleport_service:Teleport(3260590327, local_player)
+        game:GetService('TeleportService'):Teleport(3260590327, plr)
     end
 end
 
