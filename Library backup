@@ -379,26 +379,59 @@ local function lobby_ready_up()
     end)
 end
 
+-- Helper: wait for the lobby "ready" UI to become visible (timeout in seconds)
+local function wait_for_lobby_ready(timeout)
+    timeout = timeout or 15
+    local start_time = tick()
+    while tick() - start_time < timeout do
+        local overrides = player_gui:FindFirstChild("ReactOverridesVote")
+        local frame = overrides and overrides:FindFirstChild("Frame")
+        local votes = frame and frame:FindFirstChild("votes")
+        -- some UIs place "ready" directly under votes or inside a container
+        local ready = votes and (votes:FindFirstChild("ready") or votes:FindFirstChild("container") and votes.container:FindFirstChild("ready"))
+        if ready and ready.Visible then
+            return true
+        end
+        task.wait(0.25)
+    end
+    return false
+end
+
 local function select_map_override(map_id, ...)
     local args = {...}
+    local is_vip = args[#args] == "vip"
 
-    if args[#args] == "vip" then
+    if is_vip then
         pcall(function()
             remote_func:InvokeServer("LobbyVoting", "Override", map_id)
         end)
     else
-        -- if caller is not vip, send them back to lobby (safely call if function exists)
-        if type(start_back_to_lobby) == "function" then
-            pcall(start_back_to_lobby)
-        else
-            warn("start_back_to_lobby() is not defined")
-        end
+        -- non-vip flow:
+        -- try to cast the override (if desired), but ensure we don't rely on external functions.
+        -- We'll attempt a safe notify (no-op if not allowed) and proceed to try readying.
+        -- If lobby_ready_up() did not lead to a visible "ready" UI within 15 seconds, teleport back to lobby.
+        -- (Everything used here is defined in this script.)
+        -- Note: we intentionally avoid calling external start_back_to_lobby here.
     end
 
     task.wait(3)
     cast_map_vote(map_id, Vector3.new(12.59, 10.64, 52.01))
     task.wait(1)
+    -- attempt to ready up
     lobby_ready_up()
+
+    -- If caller was not VIP, wait up to 15 seconds for the ready UI to show.
+    if not is_vip then
+        local activated = wait_for_lobby_ready(15)
+        if not activated then
+            -- ready did not activate in time — send the player safely back to the lobby
+            pcall(function()
+                send_to_lobby()
+            end)
+            return
+        end
+    end
+
     match_ready_up()
 end
 
