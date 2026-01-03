@@ -3,7 +3,7 @@ _G.AutoStrat = true
 -- [[ INITIALIZE LIBRARY ]]
 local TDS =
 loadstring(game:HttpGet("https://raw.githubusercontent.com/raxs0420/test/refs/heads/main/library%20new/improved-testlag.lua"))()
-TDS:Mode("polluted")
+TDS:Mode("Polluted")
 TDS:Loadout("Cowboy", "Commander", "DJ Booth", "Spotlight Tech", "Warlock")
 
 TDS:Place("Cowboy", 9.6537085, 95, -11.2490854) -- 1
