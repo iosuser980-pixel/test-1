@@ -1,4 +1,4 @@
-if not game:IsLoaded() then game.Loaded:Wait() end
+if notif not game:IsLoaded() then game.Loaded:Wait() end
 
 local function identify_game_state()
     local players = game:GetService("Players")
@@ -26,6 +26,8 @@ if not send_request then
 end
 
 -- // services & main refs
+local teleport_service = game:GetService("TeleportService")
+local marketplace_service = game:GetService("MarketplaceService")
 local replicated_storage = game:GetService("ReplicatedStorage")
 local remote_func = replicated_storage:WaitForChild("RemoteFunction")
 local remote_event = replicated_storage:WaitForChild("RemoteEvent")
@@ -34,7 +36,7 @@ local local_player = players_service.LocalPlayer or players_service.PlayerAdded:
 local player_gui = local_player:WaitForChild("PlayerGui")
 
 local back_to_lobby_running = false
-local auto_snowballs_running = false
+local auto_pickups_running = false
 local auto_skip_running = false
 local anti_lag_running = false
 
@@ -51,11 +53,15 @@ local ItemNames = {
     ["18443277308"] = "Low Grade Consumable Crate(s)",
     ["136180382135048"] = "Santa Radio(s)",
     ["18443277106"] = "Mid Grade Consumable Crate(s)",
+    ["18443277591"] = "High Grade Consumable Crate(s)",
     ["132155797622156"] = "Christmas Tree(s)",
     ["124065875200929"] = "Fruit Cake(s)",
     ["17429541513"] = "Barricade(s)",
+    ["110415073436604"] = "Holy Hand Grenade(s)",
+    ["139414922355803"] = "Present Clusters(s)"
 }
 
+-- // tower management core
 local TDS = {
     placed_towers = {},
     active_strat = true,
@@ -65,6 +71,11 @@ local TDS = {
         ["Polluted"] = "polluted"
     }
 }
+
+local upgrade_history = {}
+
+-- // shared for addons
+shared.TDS_Table = TDS
 
 -- // currency tracking
 local start_coins, current_total_coins, start_gems, current_total_gems = 0, 0, 0, 0
@@ -99,6 +110,8 @@ local function get_all_rewards()
         Coins = 0, 
         Gems = 0, 
         XP = 0, 
+        Wave = 0,
+        Level = 0,
         Time = "00:00",
         Status = "UNKNOWN",
         Others = {} 
@@ -127,6 +140,18 @@ local function get_all_rewards()
     if top_banner and top_banner:FindFirstChild("textLabel") then
         local txt = top_banner.textLabel.Text:upper()
         results.Status = txt:find("TRIUMPH") and "WIN" or (txt:find("LOST") and "LOSS" or "UNKNOWN")
+    end
+
+    local level_value = local_player.Level
+    if level_value then
+        results.Level = level_value.Value or 0
+    end
+
+    local label = player_gui:WaitForChild("ReactGameTopGameDisplay").Frame.wave.container.value
+    local wave_num = label.Text:match("^(%d+)")
+
+    if wave_num then
+        results.Wave = tonumber(wave_num) or 0
     end
 
     local section_rewards = rewards_screen and rewards_screen:FindFirstChild("RewardsSection")
@@ -206,16 +231,20 @@ local function handle_post_match()
         embeds = {{
             title = (match.Status == "WIN" and "🏆 TRIUMPH" or "💀 DEFEAT"),
             color = (match.Status == "WIN" and 0x2ecc71 or 0xe74c3c),
-            description = "### 📋 Match Overview\n" ..
-                          "> **Status:** `" .. match.Status .. "`\n" ..
-                          "> **Time:** `" .. match.Time .. "`",
+            description =
+                "### 📋 Match Overview\n" ..
+                "> **Status:** `" .. match.Status .. "`\n" ..
+                "> **Time:** `" .. match.Time .. "`\n" ..
+                "> **Current Level:** `" .. match.Level .. "`\n" ..
+                "> **Wave:** `" .. match.Wave .. "`\n",
+                
             fields = {
                 {
                     name = "✨ Rewards",
                     value = "```ansi\n" ..
-                            "[2;33mCoins:[0m +" .. match.Coins .. "\n" ..
-                            "[2;34mGems: [0m +" .. match.Gems .. "\n" ..
-                            "[2;32mXP:   [0m +" .. match.XP .. "```",
+                            "[2;33mCoins:[0m +" .. match.Coins .. "\n" ..
+                            "[2;34mGems: [0m +" .. match.Gems .. "\n" ..
+                            "[2;32mXP:   [0m +" .. match.XP .. "```",
                     inline = false
                 },
                 {
@@ -243,51 +272,365 @@ local function handle_post_match()
         })
     end)
 
+    task.wait(1.5)
+
     send_to_lobby()
 end
 
 local function log_match_start()
     if not _G.SendWebhook then return end
-
+    if type(_G.Webhook) ~= "string" or _G.Webhook == "" then return end
+    if _G.Webhook:find("YOUR%-WEBHOOK") then return end
+    
     local start_payload = {
         username = "TDS AutoStrat",
         embeds = {{
             title = "🚀 **Match Started Successfully**",
             description = "The AutoStrat has successfully loaded into a new game session and is beginning execution.",
             color = 3447003,
-            
             fields = {
-                { 
-                    name = "🪙 Starting Coins", 
-                    value = "```" .. tostring(start_coins) .. " Coins```", 
-                    inline = true 
+                {
+                    name = "🪙 Starting Coins",
+                    value = "```" .. tostring(start_coins) .. " Coins```",
+                    inline = true
                 },
-                { 
-                    name = "💎 Starting Gems", 
-                    value = "```" .. tostring(start_gems) .. " Gems```", 
-                    inline = true 
+                {
+                    name = "💎 Starting Gems",
+                    value = "```" .. tostring(start_gems) .. " Gems```",
+                    inline = true
                 },
-                { 
-                    name = "Status", 
-                    value = "🟢 Running Script", 
-                    inline = false 
+                {
+                    name = "Status",
+                    value = "🟢 Running Script",
+                    inline = false
                 }
             },
-            
             footer = { text = "Logged for " .. local_player.Name .. " • TDS AutoStrat" },
             timestamp = DateTime.now():ToIsoDate()
         }}
     }
 
-    send_request({
-        Url = _G.Webhook,
-        Method = "POST",
-        Headers = { ["Content-Type"] = "application/json" },
-        Body = game:GetService("HttpService"):JSONEncode(start_payload)
-    })
+    pcall(function()
+        send_request({
+            Url = _G.Webhook,
+            Method = "POST",
+            Headers = { ["Content-Type"] = "application/json" },
+            Body = game:GetService("HttpService"):JSONEncode(start_payload)
+        })
+    end)
 end
 
 -- // voting & map selection
+local function run_vote_skip()
+    while true do
+        local success = pcall(function()
+            remote_func:InvokeServer("Voting", "Skip")
+        end)
+        if success then break end
+        task.wait(0.2)
+    end
+end
+
+local function match_ready_up()
+    local player_gui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+    
+    local ui_overrides = player_gui:WaitForChild("ReactOverridesVote", 30)
+    local main_frame = ui_overrides and ui_overrides:WaitForChild("Frame", 30)
+    
+    if not main_frame then
+        return
+    end
+
+    local vote_ready = nil
+
+    while not vote_ready do
+        local vote_node = main_frame:FindFirstChild("votes")
+        
+        if vote_node then
+            local container = vote_node:FindFirstChild("container")
+            if container then
+                local ready = container:FindFirstChild("ready")
+                if ready then
+                    vote_ready = ready
+                end
+            end
+        end
+        
+        if not vote_ready then
+            task.wait(0.5) 
+        end
+    end
+
+    repeat task.wait(0.1) until vote_ready.Visible == true
+
+    run_vote_skip()
+    log_match_start()
+end
+
+local function cast_map_vote(map_id, pos_vec)
+    local target_map = map_id or "Simplicity"
+    local target_pos = pos_vec or Vector3.new(0,0,0)
+    remote_event:FireServer("LobbyVoting", "Vote", target_map, target_pos)
+end
+
+local function lobby_ready_up()
+    pcall(function()
+        remote_event:FireServer("LobbyVoting", "Ready")
+    end)
+end
+
+local function select_map_override(map_id, ...)
+    local args = {...}
+
+    if args[#args] == "vip" then
+        remote_func:InvokeServer("LobbyVoting", "Override", map_id)
+    end
+
+    task.wait(3)
+    cast_map_vote(map_id, Vector3.new(12.59, 10.64, 52.01))
+    task.wait(1)
+    lobby_ready_up()
+    match_ready_up()
+end
+
+local function cast_modifier_vote(mods_table)
+    local bulk_modifiers = replicated_storage:WaitForChild("Network"):WaitForChild("Modifiers"):WaitForChild("RF:BulkVoteModifiers")
+    local selected_mods = mods_table or {
+        HiddenEnemies = true, Glass = true, ExplodingEnemies = true,
+        Limitation = true, Committed = true, HealthyEnemies = true,
+        SpeedyEnemies = true, Quarantine = true, Fog = true,
+        FlyingEnemies = true, Broke = true, Jailed = true, Inflation = true
+    }
+
+    pcall(function()
+        bulk_modifiers:InvokeServer(selected_mods)
+    end)
+end
+
+local function is_map_available(name)
+    for _, g in ipairs(workspace:GetDescendants()) do
+        if g:IsA("SurfaceGui") and g.Name == "MapDisplay" then
+            local t = g:FindFirstChild("Title")
+            if t and t.Text == name then
+                return true
+            end
+        end
+    end
+
+    local total_player = #players_service:GetChildren()
+    repeat
+        remote_event:FireServer("LobbyVoting", "Veto")
+        wait(1)
+    until player_gui:WaitForChild("ReactGameIntermission"):WaitForChild("Frame"):WaitForChild("buttons"):WaitForChild("veto"):WaitForChild("value").Text == "Veto ("..total_player.."/"..total_player..")"
+
+    for _, g in ipairs(workspace:GetDescendants()) do
+        if g:IsA("SurfaceGui") and g.Name == "MapDisplay" then
+            local t = g:FindFirstChild("Title")
+            if t and t.Text == name then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
+-- // timescale logic
+local function set_game_timescale(target_val)
+    local speed_list = {0, 0.5, 1, 1.5, 2}
+
+    local target_idx
+    for i, v in ipairs(speed_list) do
+        if v == target_val then
+            target_idx = i
+            break
+        end
+    end
+    if not target_idx then return end
+
+    local speed_label = game.Players.LocalPlayer.PlayerGui.ReactUniversalHotbar.Frame.timescale.Speed
+
+    local current_val = tonumber(speed_label.Text:match("x([%d%.]+)"))
+    if not current_val then return end
+
+    local current_idx
+    for i, v in ipairs(speed_list) do
+        if v == current_val then
+            current_idx = i
+            break
+        end
+    end
+    if not current_idx then return end
+
+    local diff = target_idx - current_idx
+    if diff < 0 then
+        diff = #speed_list + diff
+    end
+
+    for _ = 1, diff do
+        replicated_storage.RemoteFunction:InvokeServer(
+            "TicketsManager",
+            "CycleTimeScale"
+        )
+        task.wait(0.5)
+    end
+end
+
+local function unlock_speed_tickets()
+    if local_player.TimescaleTickets.Value >= 1 then
+        if game.Players.LocalPlayer.PlayerGui.ReactUniversalHotbar.Frame.timescale.Lock.Visible then
+            replicated_storage.RemoteFunction:InvokeServer('TicketsManager', 'UnlockTimeScale')
+        end
+    else
+        warn("no tickets left")
+    end
+end
+
+-- // ingame control
+local function trigger_restart()
+    local ui_root = player_gui:WaitForChild("ReactGameNewRewards")
+    local found_section = false
+
+    repeat
+        task.wait(0.3)
+        local f = ui_root:FindFirstChild("Frame")
+        local g = f and f:FindFirstChild("gameOver")
+        local s = g and g:FindFirstChild("RewardsScreen")
+        if s and s:FindFirstChild("RewardsSection") then
+            found_section = true
+        end
+    until found_section
+
+    task.wait(3)
+    run_vote_skip()
+end
+
+local function get_current_wave()
+    local label = player_gui:WaitForChild("ReactGameTopGameDisplay").Frame.wave.container.value
+    local wave_num = label.Text:match("^(%d+)")
+    return tonumber(wave_num) or 0
+end
+
+local function do_place_tower(t_name, t_pos)
+    while true do
+        local ok, res = pcall(function()
+            return remote_func:InvokeServer("Troops", "Pl\208\176ce", {
+                Rotation = CFrame.new(),
+                Position = t_pos
+            }, t_name)
+        end)
+
+        if ok and check_res_ok(res) then return true end
+        task.wait(0.25)
+    end
+end
+
+local function do_upgrade_tower(t_obj, path_id)
+    while true do
+        local ok, res = pcall(function()
+            return remote_func:InvokeServer("Troops", "Upgrade", "Set", {
+                Troop = t_obj,
+                Path = path_id
+            })
+        end)
+        if ok and check_res_ok(res) then return true end
+        task.wait(0.25)
+    end
+end
+
+local function do_sell_tower(t_obj)
+    while true do
+        local ok, res = pcall(function()
+            return remote_func:InvokeServer("Troops", "Sell", { Troop = t_obj })
+        end)
+        if ok and check_res_ok(res) then return true end
+        task.wait(0.25)
+    end
+end
+
+local function do_set_option(t_obj, opt_name, opt_val, req_wave)
+    if req_wave then
+        repeat task.wait(0.3) until get_current_wave() >= req_wave
+    end
+
+    while true do
+        local ok, res = pcall(function()
+            return remote_func:InvokeServer("Troops", "Option", "Set", {
+                Troop = t_obj,
+                Name = opt_name,
+                Value = opt_val
+            })
+        end)
+        if ok and check_res_ok(res) then return true end
+        task.wait(0.25)
+    end
+end
+
+local function do_activate_ability(t_obj, ab_name, ab_data, is_looping)
+    if type(ab_data) == "boolean" then
+        is_looping = ab_data
+        ab_data = nil
+    end
+
+    ab_data = type(ab_data) == "table" and ab_data or nil
+
+    local positions
+    if ab_data and type(ab_data.towerPosition) == "table" then
+        positions = ab_data.towerPosition
+    end
+
+    local clone_idx = ab_data and ab_data.towerToClone
+    local target_idx = ab_data and ab_data.towerTarget
+
+    local function attempt()
+        while true do
+            local ok, res = pcall(function()
+                local data
+
+                if ab_data then
+                    data = table.clone(ab_data)
+
+                    -- 🎯 RANDOMIZE HERE (every attempt)
+                    if positions and #positions > 0 then
+                        data.towerPosition = positions[math.random(#positions)]
+                    end
+
+                    if type(clone_idx) == "number" then
+                        data.towerToClone = TDS.placed_towers[clone_idx]
+                    end
+
+                    if type(target_idx) == "number" then
+                        data.towerTarget = TDS.placed_towers[target_idx]
+                    end
+                end
+
+                return remote_func:InvokeServer(
+                    "Troops",
+                    "Abilities",
+                    "Activate",
+                    {
+                        Troop = t_obj,
+                        Name = ab_name,
+                        Data = data
+                    }
+                )
+            end)
+
+            if ok and check_res_ok(res) then
+                return true
+            end
+
+            task.wait(0.25)
+        end
+    end
+
+    if is_looping then
+        local active = true
+        task.spawn(function()
+            while active do
+                attempt()
+                task.wait(1)
+            enon
 local function run_vote_skip()
     while true do
         local success = pcall(function()
