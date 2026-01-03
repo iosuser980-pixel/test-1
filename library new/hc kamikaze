@@ -1,5 +1,5 @@
 -- [[ CONFIGURATION ]]
-_G.AutoStrat = true
+_G.AntiLag = true
 _G.AutoSkip = true
 
 -- [[ INITIALIZE LIBRARY ]]
@@ -11,6 +11,7 @@ TDS:GameInfo("Wrecked Battlefield II", {
     Glass = false,
 })
 
+TDS:Ready()
 
 TDS:Place("Shotgunner", -37.588, 1.964, -6.094) -- 1
 TDS:Place("Shotgunner", -24.005, 1.704, -5.337) -- 2
