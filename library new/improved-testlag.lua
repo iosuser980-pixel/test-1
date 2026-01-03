@@ -408,6 +408,7 @@ local function cast_modifier_vote(mods_table)
 end
 
 local function is_map_available(name)
+    -- First check
     for _, g in ipairs(workspace:GetDescendants()) do
         if g:IsA("SurfaceGui") and g.Name == "MapDisplay" then
             local t = g:FindFirstChild("Title")
@@ -417,12 +418,19 @@ local function is_map_available(name)
         end
     end
 
+    -- Try to veto and check again
     local total_player = #players_service:GetChildren()
-    repeat
+    local vetoed = false
+    
+    -- Try vetoing once
+    pcall(function()
         remote_event:FireServer("LobbyVoting", "Veto")
-        wait(1)
-    until player_gui:WaitForChild("ReactGameIntermission"):WaitForChild("Frame"):WaitForChild("buttons"):WaitForChild("veto"):WaitForChild("value").Text == "Veto ("..total_player.."/"..total_player..")"
-
+    end)
+    
+    -- Wait a moment for the veto to process
+    task.wait(2)
+    
+    -- Check again after veto
     for _, g in ipairs(workspace:GetDescendants()) do
         if g:IsA("SurfaceGui") and g.Name == "MapDisplay" then
             local t = g:FindFirstChild("Title")
@@ -431,7 +439,8 @@ local function is_map_available(name)
             end
         end
     end
-
+    
+    -- Still not found
     return false
 end
 
@@ -834,7 +843,10 @@ function TDS:GameInfo(name, list)
     elseif is_map_available(name) then
         select_map_override(name)
     else
-        teleport_service:Teleport(3260590327, local_player)
+        -- Map not available - go back to lobby instead of teleporting
+        print("Map '" .. name .. "' not available. Returning to lobby...")
+        send_to_lobby()
+        return "MAP_NOT_FOUND"  -- Optional: return a status code
     end
 end
 
