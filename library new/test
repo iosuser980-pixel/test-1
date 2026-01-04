@@ -4,8 +4,8 @@ _G.AutoSnowballs = true
 _G.AntiLag = true
 
 -- [[ WEBHOOK SETTINGS ]]
-_G.SendWebhook = false -- Set to true to enable notifications
-_G.Webhook = "WEBHOOK HERE" 
+_G.SendWebhook = true -- Set to true to enable notifications
+_G.Webhook = "https://discord.com/api/webhooks/1455745496042967203/LQUxusQz-A6hFZun7Z1EuweHeF2Ch7fX3oapKG4TZmSA8NjKp4uTJHCnO7RKhRjKg1vl" 
 
 -- [[ INITIALIZE LIBRARY ]]
 local TDS = loadstring(game:HttpGet("https://raw.githubusercontent.com/raxs0420/test/refs/heads/main/library%20new/improved.lua"))()
